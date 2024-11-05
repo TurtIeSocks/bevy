@@ -24,13 +24,21 @@ use bevy::{
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins.set(bevy::log::LogPlugin {
-            // Show logs all the way up to the trace level, but only for logs
-            // produced by this example.
-            level: Level::TRACE,
-            filter: "warn,log_layers_ecs=trace".to_string(),
-            custom_layer,
-        }))
+        .add_plugins(
+            DefaultPlugins.set(
+                bevy::log::LogPlugin {
+                    level: Level::TRACE,
+                    // Show logs all the way up to the trace level, but only for logs
+                    // produced by this example.
+                    // Specifying a filter here overwrites the default.
+                    // filter: "warn,log_layers_ecs=trace".to_string(),
+                    custom_layer,
+                    ..default()
+                }
+                // This appends a new filter to any existing log filters.
+                .add_filter("warn,log_layers_ecs=trace"),
+            ),
+        )
         .add_systems(Startup, (log_system, setup))
         .add_systems(Update, print_logs)
         .run();

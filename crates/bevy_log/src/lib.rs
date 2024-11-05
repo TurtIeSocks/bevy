@@ -175,6 +175,14 @@ pub struct LogPlugin {
     pub custom_layer: fn(app: &mut App) -> Option<BoxedLayer>,
 }
 
+impl LogPlugin {
+    /// Append a filter to the [`LogPlugin`] without overwriting the existing filters.
+    pub fn add_filter(mut self, filter: &str) -> Self {
+        self.filter = format!("{},{}", self.filter, filter);
+        self
+    }
+}
+
 /// A boxed [`Layer`] that can be used with [`LogPlugin`].
 pub type BoxedLayer = Box<dyn Layer<Registry> + Send + Sync + 'static>;
 
