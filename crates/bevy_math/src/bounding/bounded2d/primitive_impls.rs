@@ -224,8 +224,8 @@ impl Bounded2d for Plane2d {
 
         // Dividing `f32::MAX` by 2.0 is helpful so that we can do operations
         // like growing or shrinking the AABB without breaking things.
-        let half_width = if facing_x { 0.0 } else { f32::MAX / 2.0 };
-        let half_height = if facing_y { 0.0 } else { f32::MAX / 2.0 };
+        let half_width = if facing_x { 0.0 } else { Self::BOUNDED_2D_RADIUS };
+        let half_height = if facing_y { 0.0 } else { Self::BOUNDED_2D_RADIUS };
         let half_size = Vec2::new(half_width, half_height);
 
         Aabb2d::new(isometry.translation, half_size)
@@ -233,7 +233,7 @@ impl Bounded2d for Plane2d {
 
     fn bounding_circle(&self, isometry: impl Into<Isometry2d>) -> BoundingCircle {
         let isometry = isometry.into();
-        BoundingCircle::new(isometry.translation, f32::MAX / 2.0)
+        BoundingCircle::new(isometry.translation, Self::BOUNDED_2D_RADIUS)
     }
 }
 
@@ -243,11 +243,8 @@ impl Bounded2d for Line2d {
 
         let direction = isometry.rotation * *self.direction;
 
-        // Dividing `f32::MAX` by 2.0 is helpful so that we can do operations
-        // like growing or shrinking the AABB without breaking things.
-        let max = f32::MAX / 2.0;
-        let half_width = if direction.x == 0.0 { 0.0 } else { max };
-        let half_height = if direction.y == 0.0 { 0.0 } else { max };
+        let half_width = if direction.x == 0.0 { 0.0 } else { Self::BOUNDED_2D_RADIUS };
+        let half_height = if direction.y == 0.0 { 0.0 } else { Self::BOUNDED_2D_RADIUS };
         let half_size = Vec2::new(half_width, half_height);
 
         Aabb2d::new(isometry.translation, half_size)
@@ -255,7 +252,7 @@ impl Bounded2d for Line2d {
 
     fn bounding_circle(&self, isometry: impl Into<Isometry2d>) -> BoundingCircle {
         let isometry = isometry.into();
-        BoundingCircle::new(isometry.translation, f32::MAX / 2.0)
+        BoundingCircle::new(isometry.translation, Self::BOUNDED_2D_RADIUS)
     }
 }
 

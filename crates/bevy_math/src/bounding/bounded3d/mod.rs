@@ -43,6 +43,7 @@ pub struct Aabb3d {
 }
 
 impl Aabb3d {
+    const TWO: f32 = 2.0;
     /// Constructs an AABB from its center and half-size.
     #[inline(always)]
     pub fn new(center: impl Into<Vec3A>, half_size: impl Into<Vec3A>) -> Self {
@@ -87,7 +88,7 @@ impl Aabb3d {
     /// Computes the smallest [`BoundingSphere`] containing this [`Aabb3d`].
     #[inline(always)]
     pub fn bounding_sphere(&self) -> BoundingSphere {
-        let radius = self.min.distance(self.max) / 2.0;
+        let radius = self.min.distance(self.max) / Self::TWO;
         BoundingSphere::new(self.center(), radius)
     }
 
@@ -109,12 +110,12 @@ impl BoundingVolume for Aabb3d {
 
     #[inline(always)]
     fn center(&self) -> Self::Translation {
-        (self.min + self.max) / 2.
+        (self.min + self.max) / Self::TWO
     }
 
     #[inline(always)]
     fn half_size(&self) -> Self::HalfSize {
-        (self.max - self.min) / 2.
+        (self.max - self.min) / Self::TWO
     }
 
     #[inline(always)]
@@ -551,7 +552,7 @@ impl BoundingVolume for BoundingSphere {
 
     #[inline(always)]
     fn visible_area(&self) -> f32 {
-        2. * core::f32::consts::PI * self.radius() * self.radius()
+        Self::PI_TIMES_TWO * self.radius() * self.radius()
     }
 
     #[inline(always)]

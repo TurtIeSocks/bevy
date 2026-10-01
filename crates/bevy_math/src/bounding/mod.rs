@@ -22,6 +22,8 @@ pub trait BoundingVolume: Sized {
     /// bounding box
     type HalfSize;
 
+    const PI_TIMES_TWO: f32 = std::f32::consts::PI * 2.0;
+
     /// Returns the center of the bounding volume.
     fn center(&self) -> Self::Translation;
 

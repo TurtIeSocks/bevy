@@ -72,11 +72,10 @@ impl BoundedExtrusion for Line2d {
         let dir = isometry.rotation * Vec3A::from(self.direction.extend(0.));
         let half_depth = (isometry.rotation * Vec3A::new(0., 0., half_depth)).abs();
 
-        let max = f32::MAX / 2.;
         let half_size = Vec3A::new(
-            if dir.x == 0. { half_depth.x } else { max },
-            if dir.y == 0. { half_depth.y } else { max },
-            if dir.z == 0. { half_depth.z } else { max },
+            if dir.x == 0. { half_depth.x } else { Self::RADIUS },
+            if dir.y == 0. { half_depth.y } else { Self::RADIUS },
+            if dir.z == 0. { half_depth.z } else { Self::RADIUS },
         );
 
         Aabb3d::new(isometry.translation, half_size)
@@ -200,6 +199,8 @@ impl<T: BoundedExtrusion> Bounded3d for Extrusion<T> {
 /// `Extrusion<MyShape>` without supplying any additional data; e.g.:
 /// `impl BoundedExtrusion for MyShape {}`
 pub trait BoundedExtrusion: Primitive2d + Bounded2d {
+    const RADIUS: f32 = f32::MAX / 2.;
+
     /// Get an axis-aligned bounding box for an extrusion with this shape as a base and the given `half_depth`, transformed by the given `translation` and `rotation`.
     fn extrusion_aabb_3d(&self, half_depth: f32, isometry: impl Into<Isometry3d>) -> Aabb3d {
         let isometry = isometry.into();

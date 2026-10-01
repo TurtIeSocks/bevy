@@ -23,6 +23,8 @@ fn point_cloud_2d_center(points: &[Vec2]) -> Vec2 {
 
 /// A trait with methods that return 2D bounding volumes for a shape.
 pub trait Bounded2d {
+    /// The default radius for a shape that does not have a radius.
+    const BOUNDED_2D_RADIUS: f32 = f32::MAX / 2.0;
     /// Get an axis-aligned bounding box for the shape translated and rotated by the given isometry.
     fn aabb_2d(&self, isometry: impl Into<Isometry2d>) -> Aabb2d;
     /// Get a bounding circle for the shape translated and rotated by the given isometry.
