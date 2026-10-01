@@ -449,6 +449,14 @@ custom_cursor = ["bevy_internal/custom_cursor"]
 # Experimental support for nodes that are ignored for UI layouting
 ghost_nodes = ["bevy_internal/ghost_nodes"]
 
+# Feature Profiles
+
+headless = []
+
+basic_2d = []
+
+basic_3d = []
+
 [dependencies]
 bevy_internal = { path = "crates/bevy_internal", version = "0.15.0-dev", default-features = false }
 
