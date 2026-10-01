@@ -43,7 +43,7 @@ impl Sphere {
 
     /// Get the diameter of the sphere
     #[inline(always)]
-    pub fn diameter(&self) -> f32 {
+    pub const fn diameter(&self) -> f32 {
         2.0 * self.radius
     }
 

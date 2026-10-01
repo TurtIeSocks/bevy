@@ -77,7 +77,7 @@ impl Ease for Dir3A {
 ///
 /// [the unit interval]: Interval::UNIT
 /// [ease function]: EaseFunction
-pub fn easing_curve<T: Ease + Clone>(start: T, end: T, ease_fn: EaseFunction) -> EasingCurve<T> {
+pub const fn easing_curve<T: Ease + Clone>(start: T, end: T, ease_fn: EaseFunction) -> EasingCurve<T> {
     EasingCurve {
         start,
         end,

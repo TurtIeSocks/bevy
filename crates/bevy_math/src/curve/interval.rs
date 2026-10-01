@@ -99,7 +99,7 @@ impl Interval {
 
     /// Get the length of this interval. Note that the result may be infinite (`f32::INFINITY`).
     #[inline]
-    pub fn length(self) -> f32 {
+    pub const fn length(self) -> f32 {
         self.end - self.start
     }
 
@@ -133,7 +133,7 @@ impl Interval {
     ///
     /// This is non-strict: each interval will contain itself.
     #[inline]
-    pub fn contains_interval(self, other: Self) -> bool {
+    pub const fn contains_interval(self, other: Self) -> bool {
         self.start <= other.start && self.end >= other.end
     }
 

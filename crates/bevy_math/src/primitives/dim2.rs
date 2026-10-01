@@ -46,7 +46,7 @@ impl Circle {
 
     /// Get the diameter of the circle
     #[inline(always)]
-    pub fn diameter(&self) -> f32 {
+    pub const fn diameter(&self) -> f32 {
         2.0 * self.radius
     }
 
@@ -132,13 +132,13 @@ impl Default for Arc2d {
 impl Arc2d {
     /// Create a new [`Arc2d`] from a `radius` and a `half_angle`
     #[inline(always)]
-    pub fn new(radius: f32, half_angle: f32) -> Self {
+    pub const fn new(radius: f32, half_angle: f32) -> Self {
         Self { radius, half_angle }
     }
 
     /// Create a new [`Arc2d`] from a `radius` and an `angle` in radians
     #[inline(always)]
-    pub fn from_radians(radius: f32, angle: f32) -> Self {
+    pub const fn from_radians(radius: f32, angle: f32) -> Self {
         Self {
             radius,
             half_angle: angle / 2.0,
@@ -158,7 +158,7 @@ impl Arc2d {
     ///
     /// For instance, `0.5` turns is a semicircle.
     #[inline(always)]
-    pub fn from_turns(radius: f32, fraction: f32) -> Self {
+    pub const fn from_turns(radius: f32, fraction: f32) -> Self {
         Self {
             radius,
             half_angle: fraction * PI,
@@ -167,13 +167,13 @@ impl Arc2d {
 
     /// Get the angle of the arc
     #[inline(always)]
-    pub fn angle(&self) -> f32 {
+    pub const fn angle(&self) -> f32 {
         self.half_angle * 2.0
     }
 
     /// Get the length of the arc
     #[inline(always)]
-    pub fn length(&self) -> f32 {
+    pub const fn length(&self) -> f32 {
         self.angle() * self.radius
     }
 
@@ -246,7 +246,7 @@ impl Arc2d {
     ///
     /// **Note:** This is not the negation of [`is_major`](Self::is_major): an exact semicircle is both major and minor.
     #[inline(always)]
-    pub fn is_minor(&self) -> bool {
+    pub const fn is_minor(&self) -> bool {
         self.half_angle <= FRAC_PI_2
     }
 
@@ -254,7 +254,7 @@ impl Arc2d {
     ///
     /// **Note:** This is not the negation of [`is_minor`](Self::is_minor): an exact semicircle is both major and minor.
     #[inline(always)]
-    pub fn is_major(&self) -> bool {
+    pub const fn is_major(&self) -> bool {
         self.half_angle >= FRAC_PI_2
     }
 }
@@ -311,14 +311,14 @@ impl Measured2d for CircularSector {
 impl CircularSector {
     /// Create a new [`CircularSector`] from a `radius` and an `angle`
     #[inline(always)]
-    pub fn new(radius: f32, angle: f32) -> Self {
-        Self::from(Arc2d::new(radius, angle))
+    pub const fn new(radius: f32, angle: f32) -> Self {
+        Self { arc: Arc2d::new(radius, angle) }
     }
 
     /// Create a new [`CircularSector`] from a `radius` and an `angle` in radians.
     #[inline(always)]
     pub fn from_radians(radius: f32, angle: f32) -> Self {
-        Self::from(Arc2d::from_radians(radius, angle))
+        Self { arc: Arc2d::from_radians(radius, angle) }
     }
 
     /// Create a new [`CircularSector`] from a `radius` and an `angle` in degrees.
@@ -331,31 +331,31 @@ impl CircularSector {
     ///
     /// For instance, `0.5` turns is a semicircle.
     #[inline(always)]
-    pub fn from_turns(radius: f32, fraction: f32) -> Self {
-        Self::from(Arc2d::from_turns(radius, fraction))
+    pub const fn from_turns(radius: f32, fraction: f32) -> Self {
+        Self { arc: Arc2d::from_turns(radius, fraction) }
     }
 
     /// Get half the angle of the sector
     #[inline(always)]
-    pub fn half_angle(&self) -> f32 {
+    pub const fn half_angle(&self) -> f32 {
         self.arc.half_angle
     }
 
     /// Get the angle of the sector
     #[inline(always)]
-    pub fn angle(&self) -> f32 {
+    pub const fn angle(&self) -> f32 {
         self.arc.angle()
     }
 
     /// Get the radius of the sector
     #[inline(always)]
-    pub fn radius(&self) -> f32 {
+    pub const fn radius(&self) -> f32 {
         self.arc.radius
     }
 
     /// Get the length of the arc defining the sector
     #[inline(always)]
-    pub fn arc_length(&self) -> f32 {
+    pub const fn arc_length(&self) -> f32 {
         self.arc.length()
     }
 
@@ -449,14 +449,14 @@ impl Measured2d for CircularSegment {
 impl CircularSegment {
     /// Create a new [`CircularSegment`] from a `radius`, and an `angle`
     #[inline(always)]
-    pub fn new(radius: f32, angle: f32) -> Self {
-        Self::from(Arc2d::new(radius, angle))
+    pub const fn new(radius: f32, angle: f32) -> Self {
+        Self { arc: Arc2d::new(radius, angle) }
     }
 
     /// Create a new [`CircularSegment`] from a `radius` and an `angle` in radians.
     #[inline(always)]
-    pub fn from_radians(radius: f32, angle: f32) -> Self {
-        Self::from(Arc2d::from_radians(radius, angle))
+    pub const fn from_radians(radius: f32, angle: f32) -> Self {
+        Self { arc: Arc2d::from_radians(radius, angle) }
     }
 
     /// Create a new [`CircularSegment`] from a `radius` and an `angle` in degrees.
@@ -469,31 +469,31 @@ impl CircularSegment {
     ///
     /// For instance, `0.5` turns is a semicircle.
     #[inline(always)]
-    pub fn from_turns(radius: f32, fraction: f32) -> Self {
-        Self::from(Arc2d::from_turns(radius, fraction))
+    pub const fn from_turns(radius: f32, fraction: f32) -> Self {
+        Self { arc: Arc2d::from_turns(radius, fraction) }
     }
 
     /// Get the half-angle of the segment
     #[inline(always)]
-    pub fn half_angle(&self) -> f32 {
+    pub const fn half_angle(&self) -> f32 {
         self.arc.half_angle
     }
 
     /// Get the angle of the segment
     #[inline(always)]
-    pub fn angle(&self) -> f32 {
+    pub const fn angle(&self) -> f32 {
         self.arc.angle()
     }
 
     /// Get the radius of the segment
     #[inline(always)]
-    pub fn radius(&self) -> f32 {
+    pub const fn radius(&self) -> f32 {
         self.arc.radius
     }
 
     /// Get the length of the arc defining the segment
     #[inline(always)]
-    pub fn arc_length(&self) -> f32 {
+    pub const fn arc_length(&self) -> f32 {
         self.arc.length()
     }
 

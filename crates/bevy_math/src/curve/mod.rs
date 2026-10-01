@@ -977,13 +977,13 @@ pub enum ResamplingError {
 }
 
 /// Create a [`Curve`] that constantly takes the given `value` over the given `domain`.
-pub fn constant_curve<T: Clone>(domain: Interval, value: T) -> ConstantCurve<T> {
+pub const fn constant_curve<T: Clone>(domain: Interval, value: T) -> ConstantCurve<T> {
     ConstantCurve { domain, value }
 }
 
 /// Convert the given function `f` into a [`Curve`] with the given `domain`, sampled by
 /// evaluating the function.
-pub fn function_curve<T, F>(domain: Interval, f: F) -> FunctionCurve<T, F>
+pub const fn function_curve<T, F>(domain: Interval, f: F) -> FunctionCurve<T, F>
 where
     F: Fn(f32) -> T,
 {
